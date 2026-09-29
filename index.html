@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; media-src 'none'; worker-src 'none'" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="description" content="Calculate your BMI and build a practical fitness plan around your lifestyle and goals." />
+  <title>FitPath — Your practical fitness plan</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="FitPath home">
+      <span class="brand-mark" aria-hidden="true"><span></span></span>
+      <span>FitPath</span>
+    </a>
+    <div class="header-note"><span class="status-dot"></span> Private by design</div>
+  </header>
+
+  <main>
+    <section class="hero" id="intro">
+      <div class="eyebrow"><span>✦</span> PERSONAL FITNESS, MADE PRACTICAL</div>
+      <h1>Build a plan that fits<br /><em>your real life.</em></h1>
+      <p>Start with your BMI, tell us a little about your routine, and get a simple weekly plan shaped around your goal.</p>
+      <button class="primary-button" type="button" data-start>
+        Build my plan <span aria-hidden="true">→</span>
+      </button>
+      <p class="hero-footnote">Takes about 3 minutes · No sign-up needed</p>
+    </section>
+
+    <section class="planner-shell" id="planner" hidden aria-labelledby="step-title">
+      <aside class="progress-panel" aria-label="Plan progress">
+        <a class="brand brand-light" href="#intro" aria-label="FitPath home">
+          <span class="brand-mark brand-mark-light" aria-hidden="true"><span></span></span>
+          <span>FitPath</span>
+        </a>
+        <div class="progress-copy">
+          <p class="mini-label">YOUR JOURNEY</p>
+          <ol class="steps" id="step-list">
+            <li class="active" data-step-indicator="1"><span>1</span><div><strong>Body basics</strong><small>Your measurements</small></div></li>
+            <li data-step-indicator="2"><span>2</span><div><strong>Daily life</strong><small>Habits & routine</small></div></li>
+            <li data-step-indicator="3"><span>3</span><div><strong>Food & health</strong><small>Needs & preferences</small></div></li>
+            <li data-step-indicator="4"><span>4</span><div><strong>Your goal</strong><small>Where you want to go</small></div></li>
+            <li data-step-indicator="5"><span>5</span><div><strong>Your plan</strong><small>Personalized guidance</small></div></li>
+          </ol>
+        </div>
+        <blockquote>“Small, repeatable actions beat perfect plans.”</blockquote>
+      </aside>
+
+      <div class="form-panel">
+        <div class="mobile-progress" aria-hidden="true"><span id="mobile-step">Step 1 of 4</span><div><i id="mobile-bar"></i></div></div>
+
+        <form id="fitness-form" novalidate autocomplete="off">
+          <section class="form-step active" data-step="1">
+            <p class="step-kicker">STEP 1 OF 4</p>
+            <h2 id="step-title">Let’s start with the basics.</h2>
+            <p class="step-description">These details help us calculate your BMI and establish a useful starting point.</p>
+
+            <div class="unit-toggle" role="group" aria-label="Measurement units">
+              <button type="button" class="active" data-unit="metric" aria-pressed="true">Metric</button>
+              <button type="button" data-unit="imperial" aria-pressed="false">Imperial</button>
+            </div>
+
+            <div class="field-grid">
+              <label class="field">
+                <span>Age</span>
+                <span class="input-wrap"><input id="age" name="age" type="number" inputmode="numeric" min="18" max="100" placeholder="e.g. 28" required /><small>years</small></span>
+                <em class="error" data-error-for="age"></em>
+              </label>
+              <label class="field">
+                <span>Height</span>
+                <span class="input-wrap"><input id="height" name="height" type="number" inputmode="decimal" min="100" max="250" step="0.1" placeholder="e.g. 170" required /><small id="height-unit">cm</small></span>
+                <em class="error" data-error-for="height"></em>
+              </label>
+              <label class="field">
+                <span>Weight</span>
+                <span class="input-wrap"><input id="weight" name="weight" type="number" inputmode="decimal" min="30" max="350" step="0.1" placeholder="e.g. 70" required /><small id="weight-unit">kg</small></span>
+                <em class="error" data-error-for="weight"></em>
+              </label>
+              <fieldset class="field radio-field">
+                <legend>Sex <span>(for calorie estimate)</span></legend>
+                <div class="segmented">
+                  <label><input type="radio" name="sex" value="female" checked /><span>Female</span></label>
+                  <label><input type="radio" name="sex" value="male" /><span>Male</span></label>
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="bmi-preview" id="bmi-preview" aria-live="polite">
+              <span class="bmi-icon" aria-hidden="true">↗</span>
+              <div><small>Your BMI will appear here</small><strong>Add your height and weight to see your starting point.</strong></div>
+            </div>
+            <div class="form-actions"><span></span><button class="primary-button next-button" type="button" data-next>Continue <span>→</span></button></div>
+          </section>
+
+          <section class="form-step" data-step="2" hidden>
+            <p class="step-kicker">STEP 2 OF 4</p>
+            <h2>What does your day look like?</h2>
+            <p class="step-description">There are no perfect answers. The best plan is one you can actually follow.</p>
+
+            <div class="question-block">
+              <label for="activity">How active is a typical day?</label>
+              <select id="activity" name="activity" required>
+                <option value="1.2">Mostly seated — little structured exercise</option>
+                <option value="1.375">Lightly active — exercise 1–3 days/week</option>
+                <option value="1.55" selected>Moderately active — exercise 3–5 days/week</option>
+                <option value="1.725">Very active — exercise 6–7 days/week</option>
+              </select>
+            </div>
+
+            <div class="question-block">
+              <label>How would you describe your eating pattern?</label>
+              <div class="choice-grid three">
+                <label><input type="radio" name="eating" value="irregular" /><span><b>Irregular</b><small>I often skip meals or eat on the go</small></span></label>
+                <label><input type="radio" name="eating" value="mixed" checked /><span><b>A mixed routine</b><small>Some balanced meals, some convenience</small></span></label>
+                <label><input type="radio" name="eating" value="balanced" /><span><b>Mostly balanced</b><small>Regular meals with whole foods</small></span></label>
+              </div>
+            </div>
+
+            <div class="field-grid compact">
+              <label class="field">
+                <span>Average sleep</span>
+                <span class="input-wrap"><input id="sleep" name="sleep" type="number" inputmode="decimal" min="3" max="12" step="0.5" value="7" required /><small>hours</small></span>
+              </label>
+              <label class="field">
+                <span>Water per day</span>
+                <span class="input-wrap"><input id="water" name="water" type="number" inputmode="decimal" min="0" max="8" step="0.25" value="2" required /><small>litres</small></span>
+              </label>
+            </div>
+
+            <div class="question-block">
+              <label>How much time can you realistically train?</label>
+              <div class="choice-grid time-options">
+                <label><input type="radio" name="training" value="2" /><span><b>2 days</b><small>20–30 min</small></span></label>
+                <label><input type="radio" name="training" value="3" checked /><span><b>3 days</b><small>30–45 min</small></span></label>
+                <label><input type="radio" name="training" value="4" /><span><b>4 days</b><small>40–60 min</small></span></label>
+              </div>
+            </div>
+
+            <div class="question-block">
+              <label>What can you use at home?</label>
+              <div class="choice-grid time-options">
+                <label><input type="radio" name="equipment" value="bodyweight" checked /><span><b>Bodyweight</b><small>Chair, wall & floor</small></span></label>
+                <label><input type="radio" name="equipment" value="bands" /><span><b>Bands</b><small>Resistance band</small></span></label>
+                <label><input type="radio" name="equipment" value="weights" /><span><b>Weights</b><small>Dumbbells or backpack</small></span></label>
+              </div>
+            </div>
+
+            <div class="form-actions"><button class="text-button" type="button" data-back>← Back</button><button class="primary-button next-button" type="button" data-next>Continue <span>→</span></button></div>
+          </section>
+
+          <section class="form-step" data-step="3" hidden>
+            <p class="step-kicker">STEP 3 OF 4</p>
+            <h2>Make it work for your body.</h2>
+            <p class="step-description">Choose what fits you. Your answers stay on this device and are only used to shape this plan.</p>
+
+            <div class="question-block">
+              <label for="region">Which food culture feels most familiar?</label>
+              <select id="region" name="region">
+                <option value="south-asia">South Asian / Indian</option>
+                <option value="middle-east">Middle Eastern / North African</option>
+                <option value="east-asia">East or Southeast Asian</option>
+                <option value="africa">Sub-Saharan African</option>
+                <option value="latin">Latin American / Caribbean</option>
+                <option value="western">European / North American</option>
+              </select>
+              <p class="field-note">We use familiar meal ideas, not assumptions about your identity.</p>
+            </div>
+
+            <div class="question-block">
+              <label>What kind of diet do you follow?</label>
+              <div class="choice-grid four diet-options">
+                <label><input type="radio" name="diet" value="vegetarian" checked /><span><b>Vegetarian</b><small>No meat or fish</small></span></label>
+                <label><input type="radio" name="diet" value="nonveg" /><span><b>Non-vegetarian</b><small>Includes meat or fish</small></span></label>
+                <label><input type="radio" name="diet" value="vegan" /><span><b>Vegan</b><small>No animal products</small></span></label>
+                <label><input type="radio" name="diet" value="pescatarian" /><span><b>Pescatarian</b><small>Fish, no meat</small></span></label>
+              </div>
+            </div>
+
+            <fieldset class="question-block check-fieldset">
+              <legend>Food needs or intolerances <span>Select all that apply</span></legend>
+              <div class="check-grid">
+                <label><input type="checkbox" name="foodNeed" value="lactose" /><span>Lactose intolerant</span></label>
+                <label><input type="checkbox" name="foodNeed" value="gluten" /><span>Gluten-free / coeliac</span></label>
+                <label><input type="checkbox" name="foodNeed" value="nuts" /><span>Nut allergy</span></label>
+                <label><input type="checkbox" name="foodNeed" value="shellfish" /><span>Shellfish allergy</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="question-block check-fieldset medical-block">
+              <legend>Health considerations <span>Optional · select all that apply</span></legend>
+              <p class="field-note">This does not diagnose or treat a condition. It helps us avoid unsuitable generic advice.</p>
+              <div class="check-grid medical-grid">
+                <label><input type="checkbox" name="condition" value="ibs" /><span>IBS</span></label>
+                <label><input type="checkbox" name="condition" value="ibd" /><span>IBD / Crohn's / colitis</span></label>
+                <label><input type="checkbox" name="condition" value="fatigue" /><span>Persistent fatigue</span></label>
+                <label><input type="checkbox" name="condition" value="depression" /><span>Depression / low mood</span></label>
+                <label><input type="checkbox" name="condition" value="pregnancy" /><span>Pregnant / postpartum</span></label>
+                <label><input type="checkbox" name="condition" value="diabetes" /><span>Diabetes / prediabetes</span></label>
+                <label><input type="checkbox" name="condition" value="heart" /><span>Heart condition / high BP</span></label>
+                <label><input type="checkbox" name="condition" value="kidney" /><span>Kidney condition</span></label>
+                <label><input type="checkbox" name="condition" value="joint" /><span>Joint, back, or mobility issue</span></label>
+                <label><input type="checkbox" name="condition" value="eating" /><span>Eating-disorder history</span></label>
+                <label><input id="other-condition-check" type="checkbox" name="condition" value="other" /><span>Another condition</span></label>
+              </div>
+              <label class="field other-condition" id="other-condition-wrap" hidden>
+                <span>Condition or consideration</span>
+                <span class="input-wrap"><input id="other-condition" name="otherCondition" type="text" maxlength="80" autocomplete="off" spellcheck="false" placeholder="Add only what you are comfortable sharing" /></span>
+              </label>
+            </fieldset>
+
+            <div class="form-actions"><button class="text-button" type="button" data-back>← Back</button><button class="primary-button next-button" type="button" data-next>Continue <span>→</span></button></div>
+          </section>
+
+          <section class="form-step" data-step="4" hidden>
+            <p class="step-kicker">STEP 4 OF 4</p>
+            <h2>What would feel like progress?</h2>
+            <p class="step-description">Choose the main outcome you want to focus on first. You can still build strength, energy, and healthier habits along the way.</p>
+
+            <div class="goal-options">
+              <label><input type="radio" name="goal" value="lose" checked /><span class="goal-symbol">↓</span><span><b>Lose weight</b><small>Create a sustainable calorie deficit while keeping strength and energy.</small></span><i>✓</i></label>
+              <label><input type="radio" name="goal" value="maintain" /><span class="goal-symbol">≈</span><span><b>Maintain & feel better</b><small>Build consistency, improve energy, and support your current weight.</small></span><i>✓</i></label>
+              <label><input type="radio" name="goal" value="gain" /><span class="goal-symbol">↑</span><span><b>Gain muscle</b><small>Use progressive strength training and a controlled calorie surplus.</small></span><i>✓</i></label>
+            </div>
+
+            <label class="field target-field" id="target-field">
+              <span>Target weight <em>Optional</em></span>
+              <span class="input-wrap"><input id="target-weight" name="targetWeight" type="number" inputmode="decimal" min="30" max="350" step="0.1" placeholder="Your goal" /><small id="target-unit">kg</small></span>
+              <em class="helper">We’ll use a gradual, realistic pace—not a deadline.</em>
+            </label>
+
+            <div class="form-actions"><button class="text-button" type="button" data-back>← Back</button><button class="primary-button create-button" type="submit">Create my plan <span>✦</span></button></div>
+          </section>
+        </form>
+
+        <section class="results" id="results" hidden aria-live="polite">
+          <div class="results-header">
+            <div><p class="step-kicker">YOUR STARTING PLAN</p><h2>A steady path forward.</h2><p id="plan-summary"></p></div>
+            <button class="icon-button" id="restart" type="button" aria-label="Start over">↻</button>
+          </div>
+
+          <div class="snapshot-grid">
+            <article class="snapshot featured"><small>YOUR BMI</small><strong id="result-bmi">—</strong><span id="result-category">—</span></article>
+            <article class="snapshot"><small>DAILY ENERGY RANGE</small><strong id="result-calories">—</strong><span>estimated kcal/day</span></article>
+            <article class="snapshot"><small>WEEKLY FOCUS</small><strong id="result-focus">—</strong><span id="result-pace">—</span></article>
+          </div>
+
+          <div class="plan-grid">
+            <article class="plan-card nutrition-card">
+              <div class="card-heading"><span>01</span><div><small>FUEL</small><h3>Your nutrition rhythm</h3></div></div>
+              <p id="nutrition-intro"></p>
+              <div class="plate" aria-label="Suggested plate: half vegetables, one quarter protein, one quarter carbohydrates">
+                <div class="plate-veg"><span>½</span><small>vegetables<br />& fruit</small></div>
+                <div class="plate-protein"><span>¼</span><small>protein</small></div>
+                <div class="plate-carbs"><span>¼</span><small>smart carbs</small></div>
+              </div>
+              <ul class="check-list" id="nutrition-list"></ul>
+            </article>
+
+            <article class="plan-card meal-card">
+              <div class="card-heading"><span>02</span><div><small>EAT LOCAL</small><h3>Your flexible meal day</h3></div></div>
+              <p id="meal-intro"></p>
+              <div class="meal-list" id="meal-list"></div>
+            </article>
+
+            <article class="plan-card">
+              <div class="card-heading"><span>03</span><div><small>MOVE</small><h3>Your at-home week</h3></div></div>
+              <p id="movement-intro"></p>
+              <div class="week-strip" id="week-strip"></div>
+              <ul class="check-list" id="movement-list"></ul>
+            </article>
+
+            <article class="plan-card">
+              <div class="card-heading"><span>04</span><div><small>RESET</small><h3>Yoga & calm</h3></div></div>
+              <p id="mind-intro"></p>
+              <ul class="check-list" id="mind-list"></ul>
+            </article>
+
+            <article class="plan-card wide-card">
+              <div class="card-heading"><span>05</span><div><small>RECOVER</small><h3>Your foundation habits</h3></div></div>
+              <div class="habit-grid" id="habit-grid"></div>
+            </article>
+          </div>
+
+          <div class="first-week">
+            <span>START HERE</span>
+            <div><h3>Your first-week promise</h3><p id="first-week-text"></p></div>
+            <button class="secondary-button" id="print-plan" type="button">Print plan</button>
+          </div>
+
+          <div class="safety-note" id="safety-note">
+            <strong>This is educational guidance—not medical advice.</strong>
+            <p>BMI is a screening measure and does not diagnose health or account for muscle mass, pregnancy, age-related changes, or body composition. Talk with a qualified clinician or registered dietitian before making major changes, especially if you have a medical condition, take medication, are pregnant, or have a history of disordered eating.</p>
+            <p class="source-links">Safety references: <a href="https://www.cdc.gov/physical-activity-basics/guidelines/healthy-pregnant-or-postpartum-women.html" target="_blank" rel="noopener noreferrer">CDC pregnancy activity</a> · <a href="https://www.niddk.nih.gov/health-information/digestive-diseases/irritable-bowel-syndrome/eating-diet-nutrition" target="_blank" rel="noopener noreferrer">NIDDK on IBS nutrition</a> · <a href="https://www.who.int/publications/i/item/9789240014886" target="_blank" rel="noopener noreferrer">WHO activity guidance</a> · <a href="https://www.nhs.uk/symptoms/tiredness-and-fatigue/" target="_blank" rel="noopener noreferrer">NHS fatigue guidance</a></p>
+          </div>
+          <div class="clinical-note" id="clinical-note" hidden></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>FitPath</span><p>Progress over perfection. Always.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>
+
